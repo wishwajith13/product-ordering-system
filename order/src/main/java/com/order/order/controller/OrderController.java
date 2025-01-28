@@ -1,6 +1,7 @@
 package com.order.order.controller;
 
 
+import com.order.order.common.OrderResponse;
 import com.order.order.dto.OrderDTO;
 import com.order.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,11 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+    @PostMapping("/addorder")
+    public OrderResponse saveOrder(@RequestBody OrderDTO orderDTO) {
+        return orderService.saveOrder(orderDTO);
+    }
 
     @GetMapping("/getorders")
     public List<OrderDTO> getOrders() {
