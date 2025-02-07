@@ -3,8 +3,10 @@ package com.order.order.controller;
 
 import com.order.order.common.OrderResponse;
 import com.order.order.dto.OrderDTO;
+import com.order.order.kafka.OrderProducer;
 import com.order.order.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.umsm.base.dto.OrderEventDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,12 +14,18 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "api/v1/")
+@AllArgsConstructor
 public class OrderController {
-    @Autowired
     private OrderService orderService;
+    private OrderProducer orderProducer;
 
     @PostMapping("/addorder")
-    public OrderResponse saveOrder(@RequestBody OrderDTO orderDTO) {
+    public OrderResponse saveOrder(@RequestBody OrderDTO orderDTO)
+    {
+        OrderEventDTO orderEventDTO = new OrderEventDTO();
+        orderEventDTO.setMessage("Order is commited");
+        orderEventDTO.setStatus("Pending");
+        orderProducer.sendMessage(orderEventDTO);
         return orderService.saveOrder(orderDTO);
     }
 
@@ -36,7 +44,7 @@ public class OrderController {
         return orderService.updateOrder(orderDTO);
     }
 
-    @DeleteMapping("/deleteorder/{orderId}")
+    @DeleteMapping("/deleteorder/{orderId}deleteorder/{orderId}")
     public String deleteOrder(@PathVariable Integer orderId) {
         return orderService.deleteOrder(orderId);
     }

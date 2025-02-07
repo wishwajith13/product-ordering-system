@@ -39,7 +39,7 @@ public class OrderService {
     }
 
     public List<OrderDTO> getAllOrders() {
-        List<Orders>orderList = orderRepo.findAll();
+        List<Orders> orderList = orderRepo.findAll();
         return modelMapper.map(orderList, new TypeToken<List<OrderDTO>>(){}.getType());
     }
 
