@@ -44,7 +44,7 @@ public class OrderController {
         return orderService.updateOrder(orderDTO);
     }
 
-    @DeleteMapping("/deleteorder/{orderId}deleteorder/{orderId}")
+    @DeleteMapping("/deleteorder/{orderId}")
     public String deleteOrder(@PathVariable Integer orderId) {
         return orderService.deleteOrder(orderId);
     }
