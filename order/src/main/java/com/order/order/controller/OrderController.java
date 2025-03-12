@@ -13,13 +13,13 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "api/v1/")
+@RequestMapping(value = "api/v1/order")
 @AllArgsConstructor
 public class OrderController {
     private OrderService orderService;
     private OrderProducer orderProducer;
 
-    @PostMapping("/addorder")
+    @PostMapping
     public OrderResponse saveOrder(@RequestBody OrderDTO orderDTO)
     {
         OrderEventDTO orderEventDTO = new OrderEventDTO();
@@ -29,22 +29,22 @@ public class OrderController {
         return orderService.saveOrder(orderDTO);
     }
 
-    @GetMapping("/getorders")
+    @GetMapping
     public List<OrderDTO> getOrders() {
         return orderService.getAllOrders();
     }
 
-    @GetMapping("/order/{orderId}")
+    @GetMapping("/{orderId}")
     public OrderDTO getOrderById(@PathVariable Integer orderId) {
         return orderService.getOrderById(orderId);
     }
 
-    @PutMapping("/updateorder")
+    @PutMapping
     public OrderDTO updateOrder(@RequestBody OrderDTO orderDTO) {
         return orderService.updateOrder(orderDTO);
     }
 
-    @DeleteMapping("/deleteorder/{orderId}")
+    @DeleteMapping("/{orderId}")
     public String deleteOrder(@PathVariable Integer orderId) {
         return orderService.deleteOrder(orderId);
     }
